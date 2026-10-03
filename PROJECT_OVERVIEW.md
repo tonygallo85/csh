@@ -113,7 +113,7 @@ erDiagram
 | GET    | `/login`    | `login`    |
 | GET    | `/register` | `register` |
 
-The form submissions for login, register and logout come with the auth starter kit.
+Login, register, logout and password reset come with the Laravel Breeze starter kit, already installed in the project (`routes/auth.php`).
 
 ### Logged-in users (students, teachers and the admin)
 
@@ -122,7 +122,7 @@ All these routes use the `auth` middleware. There is **one set of course pages f
 | Method    | URI                                            | Route name                     | What it does                                                        |
 | --------- | ---------------------------------------------- | ------------------------------ | ------------------------------------------------------------------- |
 | GET       | `/dashboard`                                   | `dashboard`                    | "My courses": the courses I teach (teacher) or I'm enrolled in (student, with an "Unenroll" button). The admin sees all courses. |
-| GET       | `/profile`                                     | `profile.show`                 | My profile.                                                         |
+| GET/PATCH/DELETE | `/profile`                              | `profile.edit`, `profile.update`, `profile.destroy` | Edit my profile, change my password, delete my account (from the starter kit). |
 | GET       | `/courses`                                     | `courses.index`                | Course catalog. Students see only the courses they are **not** enrolled in yet, and enroll here. Teachers and the admin see all courses. |
 | GET       | `/courses/create`                              | `courses.create`               | Form to add a course (teacher, admin).                              |
 | POST      | `/courses`                                     | `courses.store`                | Save the new course (teacher, admin).                               |
