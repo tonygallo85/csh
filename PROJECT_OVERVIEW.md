@@ -49,7 +49,7 @@ The application uses three models: `User`, `Course`, and `Enrollment`.
 
 - Both columns default to `false`, so a newly registered user is a student.
 - Only the admin can change `is_teacher`. Neither column can be set from the register form.
-- Only the seeded admin user has `is_admin` set to `true`.
+- Only the seeded admin user has `is_admin` set to `true`. Its login is `admin@admin.com` / `password`, as required by the assessment criteria.
 
 ### Course
 

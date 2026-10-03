@@ -115,8 +115,8 @@ A user is a normal user **or** an admin. Keep it simple: a single `is_admin` boo
 ### Seed the default admin
 
 - [ ] Seed the required default admin with `is_admin` set to `true`. → `MB2`
-  - Username `admin`, email `admin@ehb.be`, password `Password!321`.
-  - *Test:* logging in as `admin@ehb.be` / `Password!321` works, and their `is_admin` is true.
+  - Name `Admin`, email `admin@admin.com`, password `password` (as required by the assessment criteria).
+  - *Test:* logging in as `admin@admin.com` / `password` works, and their `is_admin` is true.
 
 ### The admin gate
 
@@ -315,7 +315,7 @@ This phase proves each **graded** technical requirement is actually present, the
 
 - [ ] `php artisan migrate:fresh --seed` runs clean on a wiped DB. → `WB6`
   - *Test:* fresh clone + your `.env` + this one command yields a working, populated app.
-- [ ] Default admin present after seeding: `admin@ehb.be` / `Password!321`. → `MB2`
+- [ ] Default admin present after seeding: `admin@admin.com` / `password`. → `MB2`
   - *Test:* you can log in as the admin on a freshly seeded DB.
 - [ ] README: description, per-requirement file/line references, install guide, screenshots, sources (incl. AI chat log).
   - *Test:* a classmate could clone and run it using only your README.
