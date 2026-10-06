@@ -1,0 +1,29 @@
+COOL SCHOOL HUB - PAGES
+
+
+PUBLIC  (anyone, no login)
+├── Home
+├── Log in
+└── Register
+
+
+LOGGED IN  (student, teacher, admin)
+├── Dashboard - "My courses"
+├── Courses - the catalog
+│   ├── Course details
+│   ├── Add a course         (teacher, admin)
+│   └── Edit a course        (teacher: own only, admin)
+└── My profile
+
+
+ADMIN ONLY
+└── Users
+    └── Edit a user          (promote to teacher)
+
+
+
+WHO DOES WHAT
+
+Student    sees their courses, enrolls in new ones, unenrolls
+Teacher    sees the courses they teach, adds, edits and deletes them
+Admin      sees and edits everything, promotes users to teacher
