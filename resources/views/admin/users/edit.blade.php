@@ -16,6 +16,20 @@
                             @csrf
                             @method('PATCH')
 
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}">
+
+                            @error('name')
+                                <p class="text-red-600">{{ $message }}</p>
+                            @enderror
+
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}">
+
+                            @error('email')
+                                <p class="text-red-600">{{ $message }}</p>
+                            @enderror
+
                             <label>
                                 <input type="checkbox" name="is_teacher" value="1" @checked($user->is_teacher)>
                                 Is Teacher

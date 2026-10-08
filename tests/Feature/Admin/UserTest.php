@@ -37,7 +37,7 @@ test('admin users are shown users', function () {
 });
 
 // Test 4 - Admin User
-test('admin can upgrade student to teacher', function () {
+test('admin can edit name and email from user, and can upgrade student to teacher', function () {
     $admin = User::factory()->create([
         'is_admin' => true,
     ]);
@@ -47,6 +47,8 @@ test('admin can upgrade student to teacher', function () {
     $response = $this
         ->actingAs($admin)
         ->patch(route('admin.users.update', $student), [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
             'is_teacher' => true,
         ]);
 
@@ -57,6 +59,8 @@ test('admin can upgrade student to teacher', function () {
     $student->refresh();
 
     expect($student->is_teacher)->toBeTrue();
+    expect($student->name)->toBe('Test User');
+    expect($student->email)->toBe('test@example.com');
 });
 
 // Test 5 - Non-Admin User
@@ -75,4 +79,28 @@ test('non-admin users cannot upgrade themselves to teacher', function () {
     $user->refresh();
 
     expect($user->is_teacher)->toBeFalse();
+});
+
+// Test 6 - Admin User
+test('admin cannot give a user an email that is already taken', function () {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $student = User::factory()->create();
+
+    $response = $this
+        ->actingAs($admin)
+        ->patch(route('admin.users.update', $student), [
+            'name' => $admin->name,
+            'email' => $admin->email,
+            'is_teacher' => true,
+        ]);
+
+    $response->assertSessionHasErrors('email');
+
+    $student->refresh();
+
+    expect($student->email)->not->toBe($admin->email);
+
 });
