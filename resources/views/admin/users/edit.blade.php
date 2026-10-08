@@ -12,31 +12,33 @@
                             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ $user->name }}
         </h2>    
-                    <form method="POST" action="{{ route('admin.users.update', $user) }}">
+                    <form method="POST" class="space-y-6" action="{{ route('admin.users.update', $user) }}">
                             @csrf
                             @method('PATCH')
 
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}">
+                            <div>
+                                <x-breeze.input-label for="name" :value="__('Name')" />
+                                <x-breeze.text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required />
+                                <x-breeze.input-error class="mt-2" :messages="$errors->get('name')" />
+                            </div>
 
-                            @error('name')
-                                <p class="text-red-600">{{ $message }}</p>
-                            @enderror
+                            <div>
+                                <x-breeze.input-label for="email" :value="__('Email')" />
+                                <x-breeze.text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required />
+                                <x-breeze.input-error class="mt-2" :messages="$errors->get('email')" />
+                            </div>
 
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}">
+                            <div>
+                                <label for="is_teacher" class="inline-flex items-center" >
+                                <input id="is_teacher" type="checkbox" class="rounded border-gray-300" name="is_teacher" value="1" @checked($user->is_teacher)>
+                                <span class="ms-2 text-sm text-gray-600">Is Teacher</span>
+                                </label>
+                            </div>
 
-                            @error('email')
-                                <p class="text-red-600">{{ $message }}</p>
-                            @enderror
-
-                            <label>
-                                <input type="checkbox" name="is_teacher" value="1" @checked($user->is_teacher)>
-                                Is Teacher
-                            </label>
-
-                            <button type="submit">Save</button>
-                        </form>
+                            <div class="flex items-center gap-4">
+                                <x-breeze.primary-button>{{ __('Save') }}</x-breeze.primary-button>
+                            </div>
+                    </form>
                 </div>
             </div>
         </div>
