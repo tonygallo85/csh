@@ -154,3 +154,4 @@ These routes are in one group with the prefix `/admin`, the name prefix `admin.`
 - A student can enroll in the same course **only once**.
 - For a student, a course is shown **either** on the dashboard (enrolled) **or** in the catalog (not enrolled), never in both.
 - When a course is deleted, all its enrollments are deleted with it (cascade delete).
+- When a teacher's account is deleted, all their courses are deleted with it (cascade delete), and so are those courses' enrollments.
