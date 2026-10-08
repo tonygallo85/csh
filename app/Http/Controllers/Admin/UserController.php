@@ -13,4 +13,9 @@ class UserController extends Controller
 
         return view('admin.users.index', ['users' => $users]);
     }
+
+    public function edit(User $user)
+    {
+        return view('admin.users.edit', ['user' => $user]);
+    }
 }

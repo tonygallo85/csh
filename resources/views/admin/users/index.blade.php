@@ -16,6 +16,7 @@
                                 <th class="px-8 py-2 text-left">Email</th>
                                 <th class="px-4 py-2 text-center">Is Teacher</th>
                                 <th class="px-4 py-2 text-center">Is Admin</th>
+                                <th class="px-4 py-2 text-center"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,6 +34,8 @@
                                             ✓
                                         @endif
                                     </td>
+                                    <td class="px-8 text-left"><a href="{{ route('admin.users.edit', $user) }}">Edit</a>
+</td>
                                 </tr>
                             @endforeach
                         </tbody>
