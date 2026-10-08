@@ -19,13 +19,16 @@ test('non-admin users are forbidden from seeing users', function () {
 });
 
 test('admin users are shown users', function () {
-    $user = User::factory()->create([
+    $admin = User::factory()->create([
         'is_admin' => true,
     ]);
+    
+    $student = User::factory()->create();
 
     $response = $this
-        ->actingAs($user)
+        ->actingAs($admin)
         ->get('/admin/users');
 
     $response->assertOk();
+    $response->assertSee( $student->email );
 });
