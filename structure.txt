@@ -18,7 +18,7 @@ LOGGED IN  (student, teacher, admin)
 
 ADMIN ONLY
 └── Users
-    └── Edit a user          (promote to teacher)
+    └── Edit a user          (name, email, promote to teacher)
 
 
 

@@ -22,6 +22,7 @@
 | Enroll in a course                  | ✅ self | ❌           | ✅ anyone |
 | Leave a course (unenroll)           | ✅ self | ❌           | ✅ anyone |
 | Promote a user to teacher           | ❌      | ❌           | ✅    |
+| Edit another user's name and email  | ❌      | ❌           | ✅    |
 
 The application uses three models: `User`, `Course`, and `Enrollment`.
 
@@ -49,7 +50,7 @@ The application uses three models: `User`, `Course`, and `Enrollment`.
 
 - Both columns default to `false`, so a newly registered user is a student.
 - Only the admin can change `is_teacher`. Neither column can be set from the register form.
-- Only the seeded admin user has `is_admin` set to `true`. Its login is `admin@admin.com` / `password`, as required by the assessment criteria.
+- Only the seeded admin user has `is_admin` set to `true`. It cannot be changed from any form, not even by the admin, so the app can never be left without an admin. Its login is `admin@admin.com` / `password`, as required by the assessment criteria.
 
 ### Course
 
@@ -142,8 +143,8 @@ These routes are in one group with the prefix `/admin`, the name prefix `admin.`
 | Method    | URI                        | Route name          | What it does                         |
 | --------- | -------------------------- | ------------------- | ------------------------------------ |
 | GET       | `/admin/users`             | `admin.users.index` | List all users.                      |
-| GET       | `/admin/users/{user}/edit` | `admin.users.edit`  | Form to promote a user to teacher.   |
-| PUT/PATCH | `/admin/users/{user}`      | `admin.users.update`| Save the change to `is_teacher`.     |
+| GET       | `/admin/users/{user}/edit` | `admin.users.edit`  | Form to edit a user's name and email and promote them to teacher. |
+| PATCH     | `/admin/users/{user}`      | `admin.users.update`| Validate and save the changes to `name`, `email` and `is_teacher`. |
 
 ## Rules
 
