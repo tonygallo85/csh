@@ -24,6 +24,21 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
+        User::factory()->create([
+            'name' => 'Student User',
+            'email' => 'student@csh.com',
+        ]);
+
+        $demoTeacher = User::factory()->teacher()->create([
+            'name' => 'Teacher User',
+            'email' => 'teacher@csh.com',
+        ]
+        );
+
+        Course::factory()->count(2)->create([
+            'teacher_id' => $demoTeacher->id,
+        ]);
+
         User::factory(10)->create();
 
         $teachers = User::factory()->teacher()->count(3)->create();

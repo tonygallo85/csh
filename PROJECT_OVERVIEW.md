@@ -53,6 +53,18 @@ The application uses three models: `User`, `Course`, and `Enrollment`.
 - Only the seeded admin user has `is_admin` set to `true`. It cannot be changed from any form, not even by the admin, so the app can never be left without an admin. Its login is `admin@admin.com` / `password`, as required by the assessment criteria.
 - The admin cannot change another user's password, because the admin should never know it. Users change their own password from their profile or with "Forgot your password?".
 
+#### Seeded accounts
+
+`php artisan migrate:fresh --seed` creates these accounts. The password of every seeded user is `password`.
+
+| Role    | Email             | Notes                          |
+| ------- | ----------------- | ------------------------------ |
+| Admin   | `admin@admin.com` | Required by the assessment.    |
+| Teacher | `teacher@csh.com` | Teaches 2 courses.             |
+| Student | `student@csh.com` |                                |
+
+It also creates 10 more students and 3 more teachers with 2 courses each, all with random names and emails.
+
 ### Course
 
 | Type   | Field        |
