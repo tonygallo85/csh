@@ -16,6 +16,7 @@
                                 <th class="px-8 py-2 text-center">Level</th>
                                 <th class="px-4 py-2 text-left">Schedule</th>
                                 <th class="px-4 py-2 text-left">Teacher</th>
+                                <th class="px-4 py-2 text-left"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -25,6 +26,7 @@
                                     <td class="px-8 text-center">{{ $course->level }}</td>
                                     <td class="px-4 text-left">{{ $course->schedule }}</td>
                                     <td class="px-4 text-left">{{ $course->teacher->name }}</td>
+                                    <td class="px-4 text-left"><a href="{{ route('courses.show', $course) }}">View</a></td>
                                 </tr>
                             @endforeach
                         </tbody>
