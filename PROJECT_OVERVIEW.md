@@ -98,8 +98,8 @@ erDiagram
 
 ## Naming of the Relations
 
-- A teacher (`User` with `is_teacher = true`) **hasMany** courses.
-- A `Course` **belongsTo** a teacher (`User`).
+- A teacher (`User` with `is_teacher = true`) **hasMany** courses: `$user->taughtCourses`.
+- A `Course` **belongsTo** a teacher (`User`): `$course->teacher`.
 - A student (`User` with `is_teacher = false`) **hasMany** enrollments.
 - An `Enrollment` **belongsTo** a student (`User`).
 - A `Course` **hasMany** enrollments.

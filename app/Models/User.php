@@ -48,4 +48,9 @@ class User extends Authenticatable
             'is_admin' => 'boolean',
         ];
     }
+
+    public function taughtCourses()
+    {
+        return $this->hasMany(Course::class, 'teacher_id');
+    }
 }
