@@ -127,6 +127,8 @@ erDiagram
 | GET    | `/login`    | `login`    |
 | GET    | `/register` | `register` |
 
+The **home page** shows the school's real course offer to everyone, including visitors who are not logged in: the language, level and schedule of every course in the database. It does **not** show the teacher or the enrolled students, and it has no enroll button; visitors are invited to log in or register.
+
 Login, register, logout and password reset come with the Laravel Breeze starter kit, already installed in the project (`routes/auth.php`).
 
 ### Logged-in users (students, teachers and the admin)
@@ -167,3 +169,7 @@ These routes are in one group with the prefix `/admin`, the name prefix `admin.`
 - For a student, a course is shown **either** on the dashboard (enrolled) **or** in the catalog (not enrolled), never in both.
 - When a course is deleted, all its enrollments are deleted with it (cascade delete).
 - When a teacher's account is deleted, all their courses are deleted with it (cascade delete), and so are those courses' enrollments.
+
+## Optional Ideas (not decided)
+
+- **No two courses at the same time for one teacher.** A validation rule on the course form, plus fixed schedules in the seeder so the test data follows it too. Decide when building the course form.

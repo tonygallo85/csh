@@ -2,7 +2,7 @@ COOL SCHOOL HUB - PAGES
 
 
 PUBLIC  (anyone, no login)
-├── Home
+├── Home - the course offer  (language, level, schedule)
 ├── Log in
 └── Register
 
