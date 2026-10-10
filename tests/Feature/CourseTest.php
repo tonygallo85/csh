@@ -176,3 +176,30 @@ test('teachers cannot update other teachers courses', function () {
         'schedule' => 'Thursday 8:00',
     ]);
 });
+
+// Test 11 - Teacher User
+test('teachers can dele their own courses', function () {
+    $teacher = User::factory()->teacher()->create();
+
+    $course = Course::factory()->create(['teacher_id' => $teacher->id]);
+
+    $response = $this
+        ->actingAs($teacher)
+        ->delete(route('courses.destroy', $course));
+
+    $this->assertDatabaseMissing('courses', ['id' => $course->id]);
+});
+
+// Test 12 - Teacher User
+test('teachers cannot delete other teachers courses', function () {
+    $teacher = User::factory()->teacher()->create();
+
+    $course = Course::factory()->create();
+
+    $response = $this
+        ->actingAs($teacher)
+        ->delete(route('courses.destroy', $course));
+
+    $response->assertForbidden();
+    $this->assertDatabaseHas('courses', ['id' => $course->id]);
+});

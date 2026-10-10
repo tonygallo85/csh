@@ -131,6 +131,10 @@ class CourseController extends Controller
      */
     public function destroy(Course $course)
     {
-        //
+        Gate::authorize('delete', $course);
+
+        $course->delete();
+
+        return redirect()->route('courses.index');
     }
 }

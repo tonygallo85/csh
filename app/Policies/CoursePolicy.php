@@ -44,7 +44,7 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course): bool
     {
-        return false;
+        return $user->is_admin || $course->teacher_id === $user->id;
     }
 
     /**

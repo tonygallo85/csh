@@ -7,11 +7,20 @@
 
   <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="mb-4 flex justify-end">
+            <div class="mb-4 flex justify-end gap-4">
                 @can('update', $course)
                     <a href="{{ route('courses.edit', $course) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md
                     font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700
                     ">Edit Course</a>
+                @endcan
+
+                @can('delete', $course)
+                    <form method="POST" action="{{ route('courses.destroy', $course) }}">
+                        @csrf
+                        @method('DELETE')
+
+                        <x-breeze.danger-button>Delete</x-breeze.danger-button>
+                    </form>
                 @endcan
             </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
