@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Validation\Rule;
 
 class CourseController extends Controller
 {
@@ -25,7 +27,9 @@ class CourseController extends Controller
     {
         Gate::authorize('create', Course::class);
 
-        return view('courses.create');
+        $teachers = User::where('is_teacher', true)->get();
+
+        return view('courses.create', ['teachers' => $teachers]);
 
     }
 
@@ -47,7 +51,22 @@ class CourseController extends Controller
         $course->language = $request->input('language');
         $course->level = $request->input('level');
         $course->schedule = $request->input('schedule');
-        $course->teacher_id = $request->user()->id;
+
+        if ($request->user()->is_admin) {
+            $course->teacher_id = $request->input('teacher_id');
+        } else {
+            $course->teacher_id = $request->user()->id;
+        }
+
+        if ($request->user()->is_admin) {
+            $request->validate([
+                'teacher_id' => ['required', Rule::exists('users', 'id')->where('is_teacher', true)],
+            ]);
+
+            $course->teacher_id = $request->input('teacher_id');
+        } else {
+            $course->teacher_id = $request->user()->id;
+        }
 
         $course->save();
 

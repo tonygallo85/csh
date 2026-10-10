@@ -33,6 +33,18 @@
                                 <x-breeze.input-error class="mt-2" :messages="$errors->get('schedule')" />
                             </div>
 
+                            @if ( Auth::user()->is_admin )
+                                <div>
+                                    <x-breeze.input-label for="teacher_id" :value="__('Teacher')" />
+                                    <select class="h-8 mt-1 block w-full border-gray-300 rounded-md shadow-sm" id="teacher_id" name="teacher_id">
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <x-breeze.input-error class="mt-2" :messages="$errors->get('teacher_id')" />
+                                </div>
+                            @endif
+
                             <div class="flex items-center gap-4">
                                 <x-breeze.primary-button>{{ __('Save') }}</x-breeze.primary-button>
                             </div>

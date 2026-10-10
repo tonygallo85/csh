@@ -85,3 +85,50 @@ test('students cannot create courses', function () {
     $response->assertForbidden();
     $this->assertDatabaseCount('courses', 0);
 });
+
+// Test 7 - Admin User
+test('admin users creates course with selected teacher', function () {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $teacher = User::factory()->teacher()->create();
+
+    $response = $this
+        ->actingAs($admin)
+        ->post(route('courses.store'), [
+            'language' => 'Italian',
+            'level' => 'A2',
+            'schedule' => 'Thursday 8:00',
+            'teacher_id' => $teacher->id,
+        ]);
+
+    $response->assertRedirect(route('courses.index'));
+    $this->assertDatabaseHas('courses', [
+        'language' => 'Italian',
+        'level' => 'A2',
+        'schedule' => 'Thursday 8:00',
+        'teacher_id' => $teacher->id,
+    ]);
+});
+
+// Test 8 - Admin User
+test('admin users cannot creates course with student user', function () {
+    $admin = User::factory()->create([
+        'is_admin' => true,
+    ]);
+
+    $student = User::factory()->create();
+
+    $response = $this
+        ->actingAs($admin)
+        ->post(route('courses.store'), [
+            'language' => 'Italian',
+            'level' => 'A2',
+            'schedule' => 'Thursday 8:00',
+            'teacher_id' => $student->id,
+        ]);
+
+    $response->assertSessionHasErrors('teacher_id');
+    $this->assertDatabaseCount('courses', 0);
+});
