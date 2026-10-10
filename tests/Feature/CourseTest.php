@@ -48,3 +48,40 @@ test('logged users are shown course details', function () {
     $response->assertOk();
     $response->assertSee($course->schedule);
 });
+
+// Test 5 - Teacher User
+test('teachers can create courses', function () {
+    $user = User::factory()->teacher()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->post(route('courses.store'), [
+            'language' => 'Italian',
+            'level' => 'A2',
+            'schedule' => 'Thursday 8:00',
+        ]);
+
+    $response->assertRedirect(route('courses.index'));
+    $this->assertDatabaseHas('courses', [
+        'language' => 'Italian',
+        'level' => 'A2',
+        'schedule' => 'Thursday 8:00',
+        'teacher_id' => $user->id,
+    ]);
+});
+
+// Test 6 - Student User
+test('students cannot create courses', function () {
+    $user = User::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->post(route('courses.store'), [
+            'language' => 'Italian',
+            'level' => 'A2',
+            'schedule' => 'Thursday 8:00',
+        ]);
+
+    $response->assertForbidden();
+    $this->assertDatabaseCount('courses', 0);
+});

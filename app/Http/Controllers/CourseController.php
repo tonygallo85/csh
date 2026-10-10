@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -22,7 +23,10 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('create', Course::class);
+
+        return view('courses.create');
+
     }
 
     /**
@@ -30,7 +34,25 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create', Course::class);
+
+        $request->validate([
+            'language' => ['required', 'string', 'max:255'],
+            'level' => ['required', 'string', 'max:255'],
+            'schedule' => ['required', 'string', 'max:255'],
+        ]);
+
+        $course = new Course;
+
+        $course->language = $request->input('language');
+        $course->level = $request->input('level');
+        $course->schedule = $request->input('schedule');
+        $course->teacher_id = $request->user()->id;
+
+        $course->save();
+
+        return redirect()->route('courses.index');
+
     }
 
     /**
