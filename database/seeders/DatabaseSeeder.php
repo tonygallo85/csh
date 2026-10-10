@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -24,7 +25,7 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
         ]);
 
-        User::factory()->create([
+        $demoStudent = User::factory()->create([
             'name' => 'Student User',
             'email' => 'student@csh.com',
         ]);
@@ -39,13 +40,33 @@ class DatabaseSeeder extends Seeder
             'teacher_id' => $demoTeacher->id,
         ]);
 
-        User::factory(10)->create();
+        $students = User::factory(10)->create();
 
         $teachers = User::factory()->teacher()->count(3)->create();
 
         foreach ($teachers as $teacher) {
             Course::factory()->count(2)->create([
                 'teacher_id' => $teacher->id,
+            ]);
+        }
+
+        foreach ($students as $student) {
+            $courses = Course::inRandomOrder()->take(2)->get();
+
+            foreach ($courses as $course) {
+                Enrollment::factory()->create([
+                    'course_id' => $course->id,
+                    'student_id' => $student->id,
+                ]);
+            }
+        }
+
+        $courses = Course::inRandomOrder()->take(2)->get();
+
+        foreach ($courses as $course) {
+            Enrollment::factory()->create([
+                'course_id' => $course->id,
+                'student_id' => $demoStudent->id,
             ]);
         }
 
