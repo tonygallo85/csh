@@ -22,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
     Route::post('/courses', [CourseController::class, 'store'])->name('courses.store');
     Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+    Route::get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+    Route::patch('/courses/{course}', [CourseController::class, 'update'])->name('courses.update');
 });
 
 // Admin Only

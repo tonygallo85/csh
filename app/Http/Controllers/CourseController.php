@@ -87,7 +87,12 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        Gate::authorize('update', $course);
+
+        $teachers = User::where('is_teacher', true)->get();
+
+        return view('courses.edit', ['course' => $course, 'teachers' => $teachers]);
+
     }
 
     /**
@@ -95,7 +100,30 @@ class CourseController extends Controller
      */
     public function update(Request $request, Course $course)
     {
-        //
+        Gate::authorize('update', $course);
+
+        $request->validate([
+            'language' => ['required', 'string', 'max:255'],
+            'level' => ['required', 'string', 'max:255'],
+            'schedule' => ['required', 'string', 'max:255'],
+        ]);
+
+        $course->language = $request->input('language');
+        $course->level = $request->input('level');
+        $course->schedule = $request->input('schedule');
+
+        if ($request->user()->is_admin) {
+            $request->validate([
+                'teacher_id' => ['required', Rule::exists('users', 'id')->where('is_teacher', true)],
+            ]);
+
+            $course->teacher_id = $request->input('teacher_id');
+        }
+
+        $course->save();
+
+        return redirect()->route('courses.show', $course);
+
     }
 
     /**

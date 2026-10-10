@@ -36,7 +36,7 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
-        return false;
+        return $user->is_admin || $course->teacher_id === $user->id;
     }
 
     /**

@@ -25,6 +25,7 @@
                                 <th class="px-8 py-2 text-center">Level</th>
                                 <th class="px-4 py-2 text-left">Schedule</th>
                                 <th class="px-4 py-2 text-left">Teacher</th>
+                                <th class="px-4 py-2 text-left"></th>                       
                                 <th class="px-4 py-2 text-left"></th>
                             </tr>
                         </thead>
@@ -36,6 +37,11 @@
                                     <td class="px-4 text-left">{{ $course->schedule }}</td>
                                     <td class="px-4 text-left">{{ $course->teacher->name }}</td>
                                     <td class="px-4 text-left"><a href="{{ route('courses.show', $course) }}">View</a></td>
+                                    <td class="px-4 text-left">
+                                        @can('update', $course)
+                                            <a href="{{ route('courses.edit', $course) }}">Edit</a></td>
+                                        @endcan
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

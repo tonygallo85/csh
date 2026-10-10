@@ -132,3 +132,47 @@ test('admin users cannot creates course with student user', function () {
     $response->assertSessionHasErrors('teacher_id');
     $this->assertDatabaseCount('courses', 0);
 });
+
+// Test 9 - Teacher User
+test('teachers can update only their courses', function () {
+    $teacher = User::factory()->teacher()->create();
+
+    $course = Course::factory()->create(['teacher_id' => $teacher->id]);
+
+    $response = $this
+        ->actingAs($teacher)
+        ->patch(route('courses.update', $course), [
+            'language' => 'Italian',
+            'level' => 'A2',
+            'schedule' => 'Thursday 8:00',
+        ]);
+
+    $this->assertDatabaseHas('courses', [
+        'language' => 'Italian',
+        'level' => 'A2',
+        'schedule' => 'Thursday 8:00',
+        'teacher_id' => $teacher->id,
+    ]);
+});
+
+// Test 10 - Teacher User
+test('teachers cannot update other teachers courses', function () {
+    $user = User::factory()->teacher()->create();
+
+    $course = Course::factory()->create();
+
+    $response = $this
+        ->actingAs($user)
+        ->patch(route('courses.update', $course), [
+            'language' => 'Greek',
+            'level' => 'C3',
+            'schedule' => 'Thursday 8:00',
+        ]);
+
+    $response->assertForbidden();
+    $this->assertDatabaseMissing('courses', [
+        'language' => 'Greek',
+        'level' => 'C3',
+        'schedule' => 'Thursday 8:00',
+    ]);
+});
