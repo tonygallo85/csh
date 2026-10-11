@@ -28,6 +28,13 @@
                     <p class="font-semibold text-gray-800 leading-tight">{{ $course->language }} {{ $course->level }}</p>
                     <p>Schedule: {{ $course->schedule }}</p>
                     <p>Teacher: {{ $course->teacher->name }}</p>
+                    @can('enroll', $course)
+                        <form class="mt-4" method="POST" action="{{ route('courses.enrollments.store', $course) }}">
+                            @csrf
+
+                            <x-breeze.primary-button>Enroll</x-breeze.primary-button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>

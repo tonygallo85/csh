@@ -62,4 +62,11 @@ class CoursePolicy
     {
         return false;
     }
+
+    public function enroll(User $user, Course $course): bool
+    {
+        return ! $user->is_admin
+            && ! $user->is_teacher
+            && ! $course->enrollments()->where('student_id', $user->id)->exists();
+    }
 }
