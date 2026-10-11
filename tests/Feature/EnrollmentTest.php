@@ -49,3 +49,37 @@ test('teachers cannot enroll in courses', function () {
     $response->assertForbidden();
     $this->assertDatabaseCount('enrollments', 0);
 });
+
+// Test 4 - Student User
+test('students can unenroll from their own courses', function () {
+    $student = User::factory()->create();
+
+    $course = Course::factory()->create();
+
+    $enrollment = Enrollment::factory()->create([
+        'course_id' => $course->id,
+        'student_id' => $student->id,
+    ]);
+
+    $response = $this
+        ->actingAs($student)
+        ->delete(route('courses.enrollments.destroy', [$course, $enrollment]));
+
+    $this->assertDatabaseMissing('enrollments', ['id' => $enrollment->id]);
+});
+
+// Test 5 - Student User
+test('students cannot unenroll other students from their courses', function () {
+    $student = User::factory()->create();
+
+    $enrollment = Enrollment::factory()->create();
+
+    $course = $enrollment->course;
+
+    $response = $this
+        ->actingAs($student)
+        ->delete(route('courses.enrollments.destroy', [$course, $enrollment]));
+
+    $response->assertForbidden();
+    $this->assertDatabaseHas('enrollments', ['id' => $enrollment->id]);
+});

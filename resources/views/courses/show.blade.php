@@ -35,6 +35,14 @@
                             <x-breeze.primary-button>Enroll</x-breeze.primary-button>
                         </form>
                     @endcan
+                    @if ($enrollment)
+                        <form class="mt-4" method="POST" action="{{ route('courses.enrollments.destroy', [$course, $enrollment]) }}">
+                            @csrf
+                            @method('DELETE')
+
+                            <x-breeze.danger-button>Unenroll</x-breeze.danger-button>
+                        </form>
+                    @endif
                 </div>
             </div>
         </div>

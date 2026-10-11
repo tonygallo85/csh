@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('courses', CourseController::class);
     Route::post('/courses/{course}/enrollments', [EnrollmentController::class, 'store'])->name('courses.enrollments.store');
+    Route::delete('/courses/{course}/enrollments/{enrollment}/', [EnrollmentController::class, 'destroy'])->name('courses.enrollments.destroy');
 });
 
 // Admin Only

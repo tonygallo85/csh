@@ -22,4 +22,13 @@ class EnrollmentController extends Controller
 
         return redirect()->route('courses.show', ['course' => $course]);
     }
+
+    public function destroy(Course $course, Enrollment $enrollment)
+    {
+        Gate::authorize('delete', $enrollment);
+
+        $enrollment->delete();
+
+        return redirect()->route('courses.show', ['course' => $course]);
+    }
 }

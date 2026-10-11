@@ -77,9 +77,14 @@ class CourseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Course $course)
+    public function show(Request $request, Course $course)
     {
-        return view('courses.show', ['course' => $course]);
+        $enrollment = $course->enrollments()->where('student_id', $request->user()->id)->first();
+
+        return view('courses.show', [
+            'course' => $course,
+            'enrollment' => $enrollment,
+        ]);
     }
 
     /**
