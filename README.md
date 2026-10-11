@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="public/images/logo.svg" width="96" alt="Cool School Hub logo">
+</p>
+
 # Cool School Hub
 
 A web application for a language school, built with Laravel 13. Teachers publish their courses, students enroll in them, and an admin manages the school.
