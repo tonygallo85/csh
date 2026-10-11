@@ -6,7 +6,7 @@
 
 - **Teachers** can see the courses they teach, including the **language**, **level**, **schedule**, and **list of enrolled students**. They can **create new courses**, and **edit or delete their own courses**.
 - **Students** can see the courses they are enrolled in, including the **language**, **level**, **teacher**, and **schedule**. They can **enroll themselves** in the courses they want, and **unenroll** from them. A student can be enrolled in more than one course at the same time (e.g. Italian A2 and English B1).
-- The **admin** can see and edit everything: all courses, all enrollments, and all users. The admin also marks users as teachers.
+- The **admin** can see and edit every course, remove any student from a course, and edit every user's name and email. The admin also marks users as teachers.
 - New users can **register** themselves. Every new user starts as a student. The admin promotes a user to teacher.
 
 ### Who Can Do What
@@ -19,7 +19,7 @@
 | Create a course                     | ❌      | ✅           | ✅    |
 | Edit a course                       | ❌      | Only own     | ✅    |
 | Delete a course                     | ❌      | Only own     | ✅    |
-| Enroll in a course                  | ✅ self | ❌           | ✅ anyone |
+| Enroll in a course                  | ✅ self | ❌           | ❌    |
 | Leave a course (unenroll)           | ✅ self | ❌           | ✅ anyone |
 | Promote a user to teacher           | ❌      | ❌           | ✅    |
 | Edit another user's name and email  | ❌      | ❌           | ✅    |
@@ -137,7 +137,7 @@ All these routes use the `auth` middleware. There is **one set of course pages f
 
 | Method    | URI                                            | Route name                     | What it does                                                        |
 | --------- | ---------------------------------------------- | ------------------------------ | ------------------------------------------------------------------- |
-| GET       | `/dashboard`                                   | `dashboard`                    | "My courses": the courses I teach (teacher) or I'm enrolled in (student, with an "Unenroll" button). The admin sees all courses. |
+| GET       | `/dashboard`                                   | `dashboard`                    | "My courses": the courses I teach (teacher) or I'm enrolled in (student). The admin sees all courses. Students unenroll from the course page. |
 | GET/PATCH/DELETE | `/profile`                              | `profile.edit`, `profile.update`, `profile.destroy` | Edit my profile, change my password, delete my account (from the starter kit). |
 | GET       | `/courses`                                     | `courses.index`                | Course catalog. Students see only the courses they are **not** enrolled in yet, and enroll here. Teachers and the admin see all courses. |
 | GET       | `/courses/create`                              | `courses.create`               | Form to add a course (teacher, admin).                              |
@@ -146,8 +146,8 @@ All these routes use the `auth` middleware. There is **one set of course pages f
 | GET       | `/courses/{course}/edit`                       | `courses.edit`                 | Form to edit a course (its teacher, admin).                         |
 | PUT/PATCH | `/courses/{course}`                            | `courses.update`               | Save the changes (its teacher, admin).                              |
 | DELETE    | `/courses/{course}`                            | `courses.destroy`              | Delete the course and its enrollments (its teacher, admin).         |
-| POST      | `/courses/{course}/enrollments`                | `courses.enrollments.store`    | Enroll: a student enrolls themselves; the admin can enroll any student. |
-| DELETE    | `/courses/{course}/enrollments/{enrollment}`   | `courses.enrollments.destroy`  | Unenroll: a student removes themselves; the admin can remove anyone. |
+| POST      | `/courses/{course}/enrollments`                | `courses.enrollments.store`    | Enroll: a student enrolls themselves. Teachers and the admin cannot enroll. |
+| DELETE    | `/courses/{course}/enrollments/{enrollment}`   | `courses.enrollments.destroy`  | Unenroll: a student removes themselves; the admin can remove any student from the course page. |
 
 `courses.*` is the **full CRUD (all 7 methods)** required by the assessment.
 
