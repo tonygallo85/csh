@@ -26,12 +26,12 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $demoStudent = User::factory()->create([
-            'name' => 'Student User',
+            'name' => 'Demo Student User',
             'email' => 'student@csh.com',
         ]);
 
         $demoTeacher = User::factory()->teacher()->create([
-            'name' => 'Teacher User',
+            'name' => 'Demo Teacher User',
             'email' => 'teacher@csh.com',
         ]
         );
