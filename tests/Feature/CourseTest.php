@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Course;
+use App\Models\Enrollment;
 use App\Models\User;
 
 // Test 1 - Guest
@@ -202,4 +203,25 @@ test('teachers cannot delete other teachers courses', function () {
 
     $response->assertForbidden();
     $this->assertDatabaseHas('courses', ['id' => $course->id]);
+});
+
+// Test 13 - Student User
+test('students do not see courses they are already enrolled in', function () {
+    $student = User::factory()->create();
+
+    $enrolledCourse = Course::factory()->create(['language' => 'Klingon']);
+    $availableCourse = Course::factory()->create(['language' => 'Elvish']);
+
+    Enrollment::factory()->create([
+        'student_id' => $student->id,
+        'course_id' => $enrolledCourse->id,
+    ]);
+
+    $response = $this
+        ->actingAs($student)
+        ->get('/courses');
+
+    $response->assertOk();
+    $response->assertSee('Elvish');
+    $response->assertDontSee('Klingon');
 });

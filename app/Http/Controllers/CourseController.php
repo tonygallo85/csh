@@ -13,9 +13,17 @@ class CourseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Course::all();
+        $user = $request->user();
+
+        if ($user->is_teacher || $user->is_admin) {
+            $courses = Course::all();
+        } else {
+            $courses = Course::whereDoesntHave('enrollments', function ($query) use ($user) {
+                $query->where('student_id', $user->id);
+            })->get();
+        }
 
         return view('courses.index', ['courses' => $courses]);
     }
