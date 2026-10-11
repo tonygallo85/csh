@@ -13,10 +13,10 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-breeze.nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('My Courses') }}
                     </x-breeze.nav-link>
                     <x-breeze.nav-link :href="route('courses.index')" :active="request()->routeIs('courses.index')">
-                        {{ __('Courses') }}
+                        {{ __('Course Catalog') }}
                     </x-breeze.nav-link>
                     @if ( Auth::user()->is_admin )
                         <x-breeze.nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
