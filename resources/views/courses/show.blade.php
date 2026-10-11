@@ -45,6 +45,46 @@
                     @endif
                 </div>
             </div>
+                    @can('viewStudents', $course)
+                <div class="mt-6 bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6 text-gray-900">
+                        <p class="font-semibold text-gray-800 leading-tight mb-4">Enrolled students</p>
+
+                        @if ($course->enrollments->isEmpty())
+                            <p>No students are enrolled in this course yet.</p>
+                        @else
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b">
+                                        <th class="px-4 py-2 text-left">Name</th>
+                                        <th class="px-4 py-2 text-left">Email</th>
+                                        <th class="px-4 py-2 text-left"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($course->enrollments as $studentEnrollment)
+                                        <tr class="border-b">
+                                            <td class="px-4 py-2 text-left">{{ $studentEnrollment->student->name }}</td>
+                                            <td class="px-4 py-2 text-left">{{ $studentEnrollment->student->email }}</td>
+                                            <td class="px-4 py-2 text-left">
+                                                @if (Auth::user()->is_admin)
+                                                    <form method="POST" action="{{ route('courses.enrollments.destroy', [$course, $studentEnrollment]) }}">
+                                                        @csrf
+                                                        @method('DELETE')
+
+                                                        <x-breeze.danger-button>Remove</x-breeze.danger-button>
+                                                    </form>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @endif
+                    </div>
+                </div>
+            @endcan
+
         </div>
     </div>
 </x-app-layout>

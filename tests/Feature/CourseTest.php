@@ -225,3 +225,31 @@ test('students do not see courses they are already enrolled in', function () {
     $response->assertSee('Elvish');
     $response->assertDontSee('Klingon');
 });
+
+// Test 14 - Teacher User
+test('teachers see the students enrolled in their own course', function () {
+    $teacher = User::factory()->teacher()->create();
+    $course = Course::factory()->create(['teacher_id' => $teacher->id]);
+    $enrollment = Enrollment::factory()->create(['course_id' => $course->id]);
+
+    $response = $this
+        ->actingAs($teacher)
+        ->get(route('courses.show', $course));
+
+    $response->assertOk();
+    $response->assertSee($enrollment->student->email);
+});
+
+// Test 15 - Student User
+test('students do not see who else is enrolled in a course', function () {
+    $student = User::factory()->create();
+    $course = Course::factory()->create();
+    $enrollment = Enrollment::factory()->create(['course_id' => $course->id]);
+
+    $response = $this
+        ->actingAs($student)
+        ->get(route('courses.show', $course));
+
+    $response->assertOk();
+    $response->assertDontSee($enrollment->student->email);
+});

@@ -69,4 +69,9 @@ class CoursePolicy
             && ! $user->is_teacher
             && ! $course->enrollments()->where('student_id', $user->id)->exists();
     }
+
+    public function viewStudents(User $user, Course $course): bool
+    {
+        return $user->is_admin || $course->teacher_id === $user->id;
+    }
 }
