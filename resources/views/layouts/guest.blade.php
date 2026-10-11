@@ -17,9 +17,10 @@
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
-                <a href="/">
-                    <x-breeze.application-logo class="w-20 h-20 fill-current text-gray-500" />
+            <div class="text-center">
+                <a href="/" class="inline-flex flex-col items-center">
+                    <x-breeze.application-logo class="w-20 h-20 fill-current text-gray-800" />
+                    <span class="mt-2 text-2xl font-bold text-gray-800">{{ config('app.name') }}</span>
                 </a>
             </div>
 
