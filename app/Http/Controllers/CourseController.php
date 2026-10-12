@@ -50,7 +50,7 @@ class CourseController extends Controller
 
         $request->validate([
             'language' => ['required', 'string', 'max:255'],
-            'level' => ['required', 'string', 'max:255'],
+            'level' => ['required', Rule::in(['A1', 'A2', 'B1', 'B2', 'C1', 'C2'])],
             'schedule' => ['required', 'string', 'max:255'],
         ]);
 
@@ -59,12 +59,6 @@ class CourseController extends Controller
         $course->language = $request->input('language');
         $course->level = $request->input('level');
         $course->schedule = $request->input('schedule');
-
-        if ($request->user()->is_admin) {
-            $course->teacher_id = $request->input('teacher_id');
-        } else {
-            $course->teacher_id = $request->user()->id;
-        }
 
         if ($request->user()->is_admin) {
             $request->validate([
@@ -117,7 +111,7 @@ class CourseController extends Controller
 
         $request->validate([
             'language' => ['required', 'string', 'max:255'],
-            'level' => ['required', 'string', 'max:255'],
+            'level' => ['required', Rule::in(['A1', 'A2', 'B1', 'B2', 'C1', 'C2'])],
             'schedule' => ['required', 'string', 'max:255'],
         ]);
 
