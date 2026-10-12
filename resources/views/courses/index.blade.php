@@ -39,7 +39,7 @@
                                     <td class="px-4 text-left"><a href="{{ route('courses.show', $course) }}">View</a></td>
                                     <td class="px-4 text-left">
                                         @can('update', $course)
-                                            <a href="{{ route('courses.edit', $course) }}">Edit</a></td>
+                                            <a href="{{ route('courses.edit', $course) }}">Edit</a>
                                         @endcan
                                     </td>
                                 </tr>
